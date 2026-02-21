@@ -89,16 +89,3 @@ The system also supports automated threshold optimization to improve rule effect
 
 ---
 
-## 🧪 Prototype Modules
-
-- Dashboard Overview  
-- Policy Upload  
-- Violations Monitoring  
-- Risk Graph  
-- Predictive Risk  
-- Human Review  
-- Policy Gap Insights  
-
----
-
-## 🏗️ Project Structure
