@@ -3,7 +3,7 @@
   "rules": [
     {
       "rule_id": "R1",
-      "description": "High-value transactions",
+      "description": "Default-value transactions",
       "field": "amount",
       "operator": ">",
       "threshold": 1000000.0,

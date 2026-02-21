@@ -35,10 +35,10 @@ def extract_rules_json_with_llm(policy_text: str) -> dict:
             "rules": [
                 {
                     "rule_id": "R1",
-                    "description": "High-value transactions",
+                    "description": "Default-value transactions",
                     "field": "amount",
                     "operator": ">",
-                    "threshold": 1000000
+                    "threshold": 1000000,
                 }
             ]
         }
@@ -46,7 +46,7 @@ def extract_rules_json_with_llm(policy_text: str) -> dict:
     genai.configure(api_key=api_key)
 
     # Model name can be gemini-1.5-flash or gemini-1.5-pro
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-1.5-pro")
 
     prompt = f"""
 You are a compliance rule extraction engine.
