@@ -1,15 +1,51 @@
 {
-  "policy_name": "Demo Policy",
+  "policy_name": "Anti-Money Laundering Monitoring Policy",
   "rules": [
     {
       "rule_id": "R1",
-      "description": "Default-value transactions",
+      "description": "All transactions exceeding 1,000,000 units must be flagged for review.",
       "field": "amount",
       "operator": ">",
-      "threshold": 1000000.0,
+      "threshold": 1000000,
       "time_window_minutes": null,
       "transaction_count_threshold": null,
-      "payment_methods": null,
+      "payment_methods": [],
+      "sender_bank_field": null,
+      "receiver_bank_field": null
+    },
+    {
+      "rule_id": "R2",
+      "description": "Transactions involving different sending and receiving banks must be monitored.",
+      "field": null,
+      "operator": null,
+      "threshold": null,
+      "time_window_minutes": null,
+      "transaction_count_threshold": null,
+      "payment_methods": [],
+      "sender_bank_field": "sender_bank",
+      "receiver_bank_field": "receiver_bank"
+    },
+    {
+      "rule_id": "R3",
+      "description": "If an account initiates more than 5 transactions within 10 minutes, the activity must be flagged.",
+      "field": null,
+      "operator": null,
+      "threshold": null,
+      "time_window_minutes": 10,
+      "transaction_count_threshold": 5,
+      "payment_methods": [],
+      "sender_bank_field": null,
+      "receiver_bank_field": null
+    },
+    {
+      "rule_id": "R4",
+      "description": "Transactions using Cash or Cheque above 50,000 units must be reviewed.",
+      "field": "amount",
+      "operator": ">",
+      "threshold": 50000,
+      "time_window_minutes": null,
+      "transaction_count_threshold": null,
+      "payment_methods": ["Cash", "Cheque"],
       "sender_bank_field": null,
       "receiver_bank_field": null
     }

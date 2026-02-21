@@ -28,25 +28,66 @@ def _extract_json_object(text: str) -> dict:
 
 def extract_rules_json_with_llm(policy_text: str) -> dict:
     api_key = os.getenv("GOOGLE_API_KEY")
+    # ✅ DEMO FALLBACK (AML POLICY)
     if not api_key:
-        # No key: return demo so pipeline keeps working
         return {
-            "policy_name": "Demo Policy",
+            "policy_name": "Anti-Money Laundering Monitoring Policy",
             "rules": [
                 {
                     "rule_id": "R1",
-                    "description": "Default-value transactions",
+                    "description": "All transactions exceeding 1,000,000 units must be flagged for review.",
                     "field": "amount",
                     "operator": ">",
                     "threshold": 1000000,
-                }
-            ]
+                    "time_window_minutes": None,
+                    "transaction_count_threshold": None,
+                    "payment_methods": [],
+                    "sender_bank_field": None,
+                    "receiver_bank_field": None,
+                },
+                {
+                    "rule_id": "R2",
+                    "description": "Transactions involving different sending and receiving banks must be monitored.",
+                    "field": None,
+                    "operator": None,
+                    "threshold": None,
+                    "time_window_minutes": None,
+                    "transaction_count_threshold": None,
+                    "payment_methods": [],
+                    "sender_bank_field": "sender_bank",
+                    "receiver_bank_field": "receiver_bank",
+                },
+                {
+                    "rule_id": "R3",
+                    "description": "If an account initiates more than 5 transactions within 10 minutes, the activity must be flagged.",
+                    "field": None,
+                    "operator": None,
+                    "threshold": None,
+                    "time_window_minutes": 10,
+                    "transaction_count_threshold": 5,
+                    "payment_methods": [],
+                    "sender_bank_field": None,
+                    "receiver_bank_field": None,
+                },
+                {
+                    "rule_id": "R4",
+                    "description": "Transactions using Cash or Cheque above 50,000 units must be reviewed.",
+                    "field": "amount",
+                    "operator": ">",
+                    "threshold": 50000,
+                    "time_window_minutes": None,
+                    "transaction_count_threshold": None,
+                    "payment_methods": ["Cash", "Cheque"],
+                    "sender_bank_field": None,
+                    "receiver_bank_field": None,
+                },
+            ],
         }
 
     genai.configure(api_key=api_key)
 
     # Model name can be gemini-1.5-flash or gemini-1.5-pro
-    model = genai.GenerativeModel("gemini-1.5-pro")
+    model = genai.GenerativeModel("gemini-1.5-flash")
 
     prompt = f"""
 You are a compliance rule extraction engine.
